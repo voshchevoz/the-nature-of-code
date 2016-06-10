@@ -17,6 +17,8 @@ function draw() {
     w[i].update();
     w[i].display();
   }
+
+  //text("self-avoiding random walk", 10, 350);
 }
 
 // create random walker at (x, y) coordinate with given stroke width and given color
