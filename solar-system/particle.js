@@ -32,5 +32,7 @@ var Particle = function() {
     }
 
     ellipse(this.pos.x, this.pos.y, this.radius, this.radius);
+
+    line(this.pos.x, this.pos.y, mouseX, mouseY);
   }
 }
