@@ -1,6 +1,6 @@
 var particles = [];
 var running = false;
-//var attractor;
+var attractor;
 
 function setup() {
   createCanvas(640, 360);
@@ -8,9 +8,9 @@ function setup() {
   particle2 = new Particle(300, 100, 2);
   particles.push(particle1);
   particles.push(particle2);
-  //attractor = new Attractor(width/2, height/2);
+  attractor = new Attractor(width/2, height/2);
   //noLoop();
-}
+};
 
 // adds global key listener
 function keyPressed() {
@@ -19,7 +19,7 @@ function keyPressed() {
     running = !running;
   }
   return false;
-}
+};
 
 // adds global mouse listener
 function mousePressed() {
@@ -29,19 +29,26 @@ function mousePressed() {
       particles[i].select();
     }
   }
-}
+
+  if (keyIsPressed && keyCode == SHIFT)
+  {
+    p = new Particle(mouseX, mouseY, 1);
+    particles.push(p);
+  }
+};
 
 function draw() {
   background(51);
 
-
-  // Attractor attracts particle
-  //var force = attractor.calculateAttraction(particle);
-  //particle.applyForce(force);
-  //
+  attractor.display();
   for (var i = 0; i < particles.length; i++) {
     // update particles only if simulation is running
     if (running) {
+
+      // Attractor attracts particle
+      var force = attractor.calculateAttraction(particles[i]);
+      particles[i].applyForce(force);
+
       particles[i].update();
     }
     particles[i].display();
@@ -53,4 +60,4 @@ function draw() {
   //particle2.display();
 
   //attractor.display();
-}
+};

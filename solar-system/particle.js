@@ -17,13 +17,20 @@ var Particle = function(x, y, m) {
     else {
       this.selected = false;
     }
-  }
+  };
+
+  this.applyForce = function(force) {
+    var f = force.copy();
+    f.div(this.mass);
+    this.acc.add(f);
+  };
+
 
   this.update = function() {
     this.vel.add(this.acc);
     this.pos.add(this.vel);
     this.acc.mult(0);
-  }
+  };
 
   this.display = function() {
     stroke(0);
@@ -67,5 +74,5 @@ var Particle = function(x, y, m) {
       var lineEnd = p5.Vector.add(this.pos, this.velCoord)
       line(this.pos.x, this.pos.y, lineEnd.x, lineEnd.y);
     }
-  }
+  };
 }

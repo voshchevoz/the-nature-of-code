@@ -22,7 +22,7 @@ var Attractor = function() {
     // Get force vector --> magnitude * direction
     force.mult(strength);
     return force;
-  }
+  };
 
   // Method to display
   this.display = function() {
@@ -30,5 +30,5 @@ var Attractor = function() {
     strokeWeight(4);
     stroke(0);
     ellipse(this.pos.x, this.pos.y, this.mass*2, this.mass*2);
-  }
+  };
 }
