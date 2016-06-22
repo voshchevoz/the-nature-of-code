@@ -5,28 +5,26 @@ var Particle = function(x, y, m) {
   this.mass = m;
   this.radius = this.mass * 16;
   this.selected = false;
-  // this stores velocity vector unnormalized - required to render vector itself
-  this.velCoord = createVector(0, 0);
 
   //generate random initial velocity vector
   var motion = floor(random(4));
   switch (motion) {
     case 0:
-      this.velCoord = createVector(this.radius, 0);
+      this.vel = createVector(this.radius, 0);
       break;
     case 1:
-      this.velCoord = createVector(-this.radius, 0);
+      this.vel = createVector(-this.radius, 0);
       break;
     case 2:
-      this.velCoord = createVector(0, this.radius);
+      this.vel = createVector(0, this.radius);
       break;
     case 3:
-      this.velCoord = createVector(0, -this.radius);
+      this.vel = createVector(0, -this.radius);
       break;
   };
 
   // normalize initial velocity
-  this.vel = this.velCoord.copy().normalize();
+  this.vel.normalize()
 
   this.select = function() {
     // mark as selected if mouse is inside the circle
@@ -97,10 +95,10 @@ var Particle = function(x, y, m) {
 
     // modify velocity line only for selected circle
     if (this.selected) {
-      this.velCoord = createVector(mouseX, mouseY).sub(this.pos);
+      var velCoord = createVector(mouseX, mouseY).sub(this.pos);
 
       // normalize velocity
-      this.vel = this.velCoord.copy().normalize();
+      this.vel = velCoord.copy().normalize();
     }
 
     var theta = this.vel.heading() + radians(90);
@@ -108,7 +106,8 @@ var Particle = function(x, y, m) {
     rotate(PI + theta);
     ellipse(0 - this.radius/2, 0, this.radius, this.radius);
     ellipse(0 + this.radius/2, 0, this.radius, this.radius);
-    ellipse(0, 0 + this.radius/2 , this.radius/2, this.radius * 2);
+    arc(0, 0, this.radius/2, this.radius * 3, TWO_PI, PI, OPEN);
+    //ellipse(0, 0 + this.radius/2 , this.radius/2, this.radius * 2);
 
     pop(); // Return to the "initial" state.
 
