@@ -28,7 +28,6 @@ var Particle = function(x, y, m) {
   // normalize initial velocity
   this.vel = this.velCoord.copy().normalize();
 
-
   this.select = function() {
     // mark as selected if mouse is inside the circle
     if(dist(mouseX, mouseY, this.pos.x, this.pos.y) < this.radius) {
@@ -87,7 +86,14 @@ var Particle = function(x, y, m) {
       }
     }
 
-    ellipse(this.pos.x, this.pos.y, this.radius, this.radius);
+    // draw figure itself
+
+    // Saves the "initial" state
+    push();
+
+    //make all parameters relative to the figure center
+    translate(this.pos.x, this.pos.y);
+
 
     // modify velocity line only for selected circle
     if (this.selected) {
@@ -97,16 +103,21 @@ var Particle = function(x, y, m) {
       this.vel = this.velCoord.copy().normalize();
     }
 
-    // draw velocity vector starting from circle center ending at velCoords
-    // draw only if simulation not running
-    if(!running) {
-      var lineEnd = p5.Vector.add(this.pos, this.velCoord)
-      line(this.pos.x, this.pos.y, lineEnd.x, lineEnd.y);
-    }
+    var theta = this.vel.heading() + radians(90);
+
+    rotate(PI + theta);
+    ellipse(0 - this.radius/2, 0, this.radius, this.radius);
+    ellipse(0 + this.radius/2, 0, this.radius, this.radius);
+    ellipse(0, 0 + this.radius/2 , this.radius/2, this.radius * 2);
+
+    pop(); // Return to the "initial" state.
 
     // returns trace of the current position
     this.getTrace = function() {
       return new Trace(this.pos.x, this.pos.y);
     };
+
+
   };
 }
+

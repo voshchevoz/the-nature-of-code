@@ -20,7 +20,7 @@ function setup() {
   attractors.push(attractor);
   attractors.push(attractor1);
 
-  tracesCheckbox = createCheckbox('Show traces', true);
+  tracesCheckbox = createCheckbox('Show traces', false);
   tracesCheckbox.parent('chb');
   //noLoop();
 };
